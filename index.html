@@ -1,158 +1,346 @@
-<!DOCTYPE html><html lang="pt-BR">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>163.BET - Cassino Oficial</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #0d0d0d;
-      color: #fff;
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
     }
+
+    body {
+      background: #0d0d0d;
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    /* Header */
     header {
-      background-color: #00ffcc;
-      padding: 16px;
+      background: linear-gradient(90deg, #00ffcc, #00b3ff);
+      padding: 15px;
       text-align: center;
-      font-weight: bold;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+
+    header h1 {
+      font-size: 24px;
       color: #000;
     }
+
+    /* Container */
     .container {
-      padding: 16px;
+      padding: 20px;
+      margin-top: 80px;
     }
-    section {
-      background: #1a1a1a;
-      padding: 16px;
-      margin-bottom: 20px;
-      border-radius: 10px;
+
+    /* Tela de Entrada */
+    #entry-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: calc(100vh - 80px);
+      text-align: center;
     }
-    h2 {
-      margin-top: 0;
+
+    #entry-screen h2 {
       color: #00ffcc;
+      margin-bottom: 20px;
     }
-    input, select, button {
-      display: block;
+
+    .form-box {
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 10px;
       width: 100%;
-      padding: 10px;
-      margin-top: 10px;
+      max-width: 400px;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
       border: none;
       border-radius: 5px;
-      font-size: 14px;
+      font-size: 16px;
     }
+
+    input {
+      background: #333;
+      color: #fff;
+    }
+
     button {
-      background-color: #00ffcc;
+      background: #00ffcc;
       color: #000;
       font-weight: bold;
       cursor: pointer;
+      transition: background 0.3s;
     }
-    .game-grid {
+
+    button:hover {
+      background: #00b3ff;
+    }
+
+    /* Painel Interno */
+    #dashboard {
+      display: none;
+    }
+
+    .navbar {
+      background: #1a1a1a;
+      padding: 10px;
       display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 10px;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
     }
+
+    .navbar button {
+      width: auto;
+      padding: 10px 20px;
+    }
+
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+    }
+
     .game {
       background: #000;
-      width: calc(50% - 10px);
       border-radius: 10px;
       overflow: hidden;
       text-align: center;
+      cursor: pointer;
     }
+
     .game img {
       width: 100%;
       height: 120px;
       object-fit: cover;
     }
+
     .game p {
       padding: 10px;
-      margin: 0;
       background: #111;
+      margin: 0;
+      font-size: 14px;
+    }
+
+    /* Modal para Depósito/Saque */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .modal-content button {
+      margin-top: 10px;
+    }
+
+    /* Responsividade */
+    @media (max-width: 600px) {
+      .container {
+        padding: 10px;
+      }
+
+      .game-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      }
     }
   </style>
 </head>
 <body>
-  <header>163.BET - Cassino Oficial</header>
-  <div class="container"><section id="register">
-  <h2>Cadastro</h2>
-  <input type="text" placeholder="Usuário">
-  <input type="text" placeholder="Nome completo">
-  <input type="tel" placeholder="Telefone">
-  <input type="password" placeholder="Senha">
-  <button>Registrar</button>
-</section>
+  <header>
+    <h1>163.BET - Cassino Oficial</h1>
+  </header>
 
-<section id="login">
-  <h2>Login</h2>
-  <input type="text" placeholder="Usuário">
-  <input type="password" placeholder="Senha">
-  <button>Entrar</button>
-</section>
-
-<section id="saque">
-  <h2>Saque</h2>
-  <input type="text" placeholder="Nome completo">
-  <select>
-    <option>Chave Pix - CPF</option>
-    <option>Chave Pix - Telefone</option>
-  </select>
-  <input type="text" placeholder="Digite a chave">
-  <button>Solicitar Saque</button>
-</section>
-
-<section id="deposito">
-  <h2>Depósito</h2>
-  <label for="valor">Escolha o valor:</label>
-  <select id="valor">
-    <option>R$10</option>
-    <option>R$20</option>
-    <option>R$50</option>
-    <option>Outro valor</option>
-  </select>
-  <p>Realize o pagamento via chave Pix:</p>
-  <input type="text" readonly value="6da1c7ab-5af7-4dff-ba20-58413fa00181">
-  <p><strong>Nome do recebedor:</strong> Gateway 163Pag</p>
-  <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=6da1c7ab-5af7-4dff-ba20-58413fa00181" alt="QR Code Pix">
-</section>
-
-<section id="jogos">
-  <h2>Provedores Disponíveis:</h2>
-  <div class="game-grid">
-    <div class="game">
-      <img src="https://imgur.com/0fZxyDT.jpg" alt="Tiger">
-      <p>PG - Fortune Tiger</p>
+  <!-- Tela de Entrada -->
+  <div id="entry-screen" class="container">
+    <div class="form-box">
+      <h2>Cadastro</h2>
+      <input type="text" id="register-username" placeholder="Usuário">
+      <input type="text" id="register-name" placeholder="Nome completo">
+      <input type="tel" id="register-phone" placeholder="Telefone">
+      <input type="password" id="register-password" placeholder="Senha">
+      <button onclick="register()">Registrar</button>
     </div>
-    <div class="game">
-      <img src="https://imgur.com/B6ZY68p.jpg" alt="Ox">
-      <p>PG - Fortune Ox</p>
-    </div>
-    <div class="game">
-      <img src="https://imgur.com/qGvswHP.jpg" alt="Rabbit">
-      <p>PG - Fortune Rabbit</p>
-    </div>
-    <div class="game">
-      <img src="https://imgur.com/kogIGtL.jpg" alt="Dragon">
-      <p>PG - Fortune Dragon</p>
-    </div>
-    <div class="game">
-      <img src="https://imgur.com/fZ6WJrn.jpg" alt="Mouse">
-      <p>PG - Fortune Mouse</p>
-    </div>
-    <div class="game">
-      <img src="https://imgur.com/A1EzUhl.jpg" alt="Gates of Olympus">
-      <p>Pragmatic - Gates of Olympus</p>
-    </div>
-    <div class="game">
-      <img src="https://imgur.com/N2xpr2z.jpg" alt="Sugar Rush">
-      <p>Pragmatic - Sugar Rush</p>
-    </div>
-    <div class="game">
-      <img src="https://imgur.com/AKF5WZb.jpg" alt="Big Bass">
-      <p>Pragmatic - Big Bass Splash</p>
+    <div class="form-box" style="margin-top: 20px;">
+      <h2>Login</h2>
+      <input type="text" id="login-username" placeholder="Usuário">
+      <input type="password" id="login-password" placeholder="Senha">
+      <button onclick="login()">Entrar</button>
     </div>
   </div>
-</section>
 
+  <!-- Painel Interno -->
+  <div id="dashboard" class="container">
+    <div class="navbar">
+      <div>Saldo: R$<span id="balance">18.00</span> (Bônus)</div>
+      <div>
+        <button onclick="openModal('deposit')">Depósito</button>
+        <button onclick="openModal('withdraw')">Saque</button>
+      </div>
+    </div>
+
+    <section id="jogos">
+      <h2>Provedores Disponíveis</h2>
+      <div class="game-grid">
+        <div class="game" onclick="playGame('PG - Fortune Tiger')">
+          <img src="https://imgur.com/0fZxyDT.jpg" alt="Tiger">
+          <p>PG - Fortune Tiger</p>
+        </div>
+        <div class="game" onclick="playGame('PG - Fortune Ox')">
+          <img src="https://imgur.com/B6ZY68p.jpg" alt="Ox">
+          <p>PG - Fortune Ox</p>
+        </div>
+        <div class="game" onclick="playGame('PG - Fortune Rabbit')">
+          <img src="https://imgur.com/qGvswHP.jpg" alt="Rabbit">
+          <p>PG - Fortune Rabbit</p>
+        </div>
+        <div class="game" onclick="playGame('PG - Fortune Dragon')">
+          <img src="https://imgur.com/kogIGtL.jpg" alt="Dragon">
+          <p>PG - Fortune Dragon</p>
+        </div>
+        <div class="game" onclick="playGame('PG - Fortune Mouse')">
+          <img src="https://imgur.com/fZ6WJrn.jpg" alt="Mouse">
+          <p>PG - Fortune Mouse</p>
+        </div>
+        <div class="game" onclick="playGame('Pragmatic - Gates of Olympus')">
+          <img src="https://imgur.com/A1EzUhl.jpg" alt="Gates of Olympus">
+          <p>Pragmatic - Gates of Olympus</p>
+        </div>
+        <div class="game" onclick="playGame('Pragmatic - Sugar Rush')">
+          <img src="https://imgur.com/N2xpr2z.jpg" alt="Sugar Rush">
+          <p>Pragmatic - Sugar Rush</p>
+        </div>
+        <div class="game" onclick="playGame('Pragmatic - Big Bass Splash')">
+          <img src="https://imgur.com/AKF5WZb.jpg" alt="Big Bass">
+          <p>Pragmatic - Big Bass Splash</p>
+        </div>
+      </div>
+    </section>
   </div>
+
+  <!-- Modal de Depósito -->
+  <div id="deposit-modal" class="modal">
+    <div class="modal-content">
+      <h2>Depósito</h2>
+      <select id="deposit-amount">
+        <option>R$10</option>
+        <option>R$20</option>
+        <option>R$50</option>
+        <option>Outro valor</option>
+      </select>
+      <p>Chave Pix: <strong>6da1c7ab-5af7-4dff-ba20-58413fa00181</strong></p>
+      <p>Nome do recebedor: Gateway 163Pag</p>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=6da1c7ab-5af7-4dff-ba20-58413fa00181" alt="QR Code Pix">
+      <button onclick="closeModal('deposit')">Fechar</button>
+    </div>
+  </div>
+
+  <!-- Modal de Saque -->
+  <div id="withdraw-modal" class="modal">
+    <div class="modal-content">
+      <h2>Saque</h2>
+      <p>Volume de aposta necessário: R$400</p>
+      <p>Volume atual: R$<span id="bet-volume">0</span></p>
+      <input type="text" id="withdraw-name" placeholder="Nome completo">
+      <select id="withdraw-method">
+        <option>Chave Pix - CPF</option>
+        <option>Chave Pix - Telefone</option>
+      </select>
+      <input type="text" id="withdraw-key" placeholder="Digite a chave">
+      <button onclick="requestWithdraw()">Solicitar Saque</button>
+      <button onclick="closeModal('withdraw')">Fechar</button>
+    </div>
+  </div>
+
+  <script>
+    let balance = 18; // Bônus inicial de R$18
+    let betVolume = 0; // Volume de apostas inicial
+
+    function register() {
+      const username = document.getElementById('register-username').value;
+      const name = document.getElementById('register-name').value;
+      const phone = document.getElementById('register-phone').value;
+      const password = document.getElementById('register-password').value;
+
+      if (username && name && phone && password) {
+        alert('Cadastro realizado com sucesso! Bônus de R$18 creditado.');
+        document.getElementById('entry-screen').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'block';
+        document.getElementById('balance').textContent = balance.toFixed(2);
+      } else {
+        alert('Por favor, preencha todos os campos.');
+      }
+    }
+
+    function login() {
+      const username = document.getElementById('login-username').value;
+      const password = document.getElementById('login-password').value;
+
+      if (username && password) {
+        document.getElementById('entry-screen').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'block';
+        document.getElementById('balance').textContent = balance.toFixed(2);
+      } else {
+        alert('Por favor, preencha todos os campos.');
+      }
+    }
+
+    function openModal(type) {
+      document.getElementById(`${type}-modal`).style.display = 'flex';
+    }
+
+    function closeModal(type) {
+      document.getElementById(`${type}-modal`).style.display = 'none';
+    }
+
+    function requestWithdraw() {
+      if (betVolume < 400) {
+        alert('Você precisa atingir um volume de aposta de R$400 para sacar.');
+      } else {
+        alert('Saque solicitado com sucesso!');
+        closeModal('withdraw');
+      }
+    }
+
+    function playGame(gameName) {
+      // Simulação de aposta (para o protótipo)
+      if (balance >= 1) {
+        balance -= 1;
+        betVolume += 1;
+        document.getElementById('balance').textContent = balance.toFixed(2);
+        document.getElementById('bet-volume').textContent = betVolume.toFixed(2);
+        alert(`Jogando ${gameName} (modo demo)`);
+      } else {
+        alert('Saldo insuficiente! Faça um depósito.');
+      }
+    }
+  </script>
 </body>
 </html>

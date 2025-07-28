@@ -1,0 +1,132 @@
+<!DOCTYPE html><html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>163.BET - Plataforma Oficial</title>
+  <style>
+    body {
+      background-color: #111;
+      font-family: Arial, sans-serif;
+      color: white;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #000;
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+      color: #00ffcc;
+    }
+    .btn-deposito {
+      background: #00ffcc;
+      color: #000;
+      font-weight: bold;
+      padding: 10px 20px;
+      border-radius: 10px;
+      text-decoration: none;
+      display: inline-block;
+      margin: 20px auto;
+    }
+    .container {
+      padding: 20px;
+    }
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .game {
+      background: #222;
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+    }
+    .game img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    .form-box {
+      background: #222;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 5px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #00ffcc;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>163.BET - CASSINO OFICIAL</header>  <div class="container">
+    <a class="btn-deposito" href="#deposito">💰 Fazer Depósito</a><div class="form-box" id="cadastro">
+  <h3>Cadastro</h3>
+  <input type="text" placeholder="Usuário">
+  <input type="text" placeholder="Nome completo">
+  <input type="text" placeholder="Telefone">
+  <input type="password" placeholder="Senha">
+  <button>Registrar</button>
+</div>
+
+<div class="form-box" id="login">
+  <h3>Login</h3>
+  <input type="text" placeholder="Usuário">
+  <input type="password" placeholder="Senha">
+  <button>Entrar</button>
+</div>
+
+<div class="form-box" id="saque">
+  <h3>Saque</h3>
+  <input type="text" placeholder="Nome completo">
+  <select>
+    <option>Chave Pix - CPF</option>
+    <option>Chave Pix - Celular</option>
+  </select>
+  <input type="text" placeholder="Digite a chave">
+  <button>Solicitar Saque</button>
+</div>
+
+<div class="form-box" id="deposito">
+  <h3>Depósito</h3>
+  <label>Escolha o valor:</label>
+  <select>
+    <option>R$10</option>
+    <option>R$20</option>
+    <option>R$50</option>
+    <option>Outro</option>
+  </select>
+  <p>Realize o pagamento via chave Pix:</p>
+  <input readonly value="6da1c7ab-5af7-4dff-ba20-58413fa00181">
+  <p>Nome do recebedor: <strong>Gateway 163Pag</strong></p>
+  <img src="https://api.qrserver.com/v1/create-qr-code/?data=6da1c7ab-5af7-4dff-ba20-58413fa00181&amp;size=150x150" alt="QR Code Pix">
+</div>
+
+<h3 style="margin-top:40px;">Provedores Disponíveis:</h3>
+<div class="game-grid">
+  <div class="game"><img src="https://cdn.pgsoft.com/PGSLOT/1674556352962.png"><p>PG - Fortune Tiger</p></div>
+  <div class="game"><img src="https://cdn.pgsoft.com/PGSLOT/1674556381536.png"><p>PG - Fortune Ox</p></div>
+  <div class="game"><img src="https://cdn.pgsoft.com/PGSLOT/1674556414483.png"><p>PG - Fortune Rabbit</p></div>
+  <div class="game"><img src="https://cdn.pgsoft.com/PGSLOT/1674556441553.png"><p>PG - Fortune Dragon</p></div>
+  <div class="game"><img src="https://cdn.pgsoft.com/PGSLOT/1674556468206.png"><p>PG - Fortune Mouse</p></div>
+  <div class="game"><img src="https://i.imgur.com/ByAWzP8.png"><p>Pragmatic - Gates of Olympus</p></div>
+  <div class="game"><img src="https://i.imgur.com/FQqgZ35.png"><p>Pragmatic - Sugar Rush</p></div>
+  <div class="game"><img src="https://i.imgur.com/ULY1wIL.png"><p>Pragmatic - Big Bass Splash</p></div>
+</div>
+
+  </div>
+</body>
+</html>

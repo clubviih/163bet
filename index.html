@@ -15,10 +15,9 @@
     body {
       background: #0d0d0d;
       color: #fff;
-      min-height: 100vh;
+      overflow-x: hidden;
     }
 
-    /* Header */
     header {
       background: linear-gradient(90deg, #00ffcc, #00b3ff);
       padding: 15px;
@@ -34,36 +33,33 @@
       color: #000;
     }
 
-    /* Container */
     .container {
       padding: 20px;
       margin-top: 80px;
-    }
-
-    /* Tela de Entrada */
-    #entry-screen {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      height: calc(100vh - 80px);
-      text-align: center;
     }
 
-    #entry-screen h2 {
-      color: #00ffcc;
-      margin-bottom: 20px;
+    #entry-screen, #dashboard {
+      width: 100%;
+      max-width: 500px;
     }
 
     .form-box {
       background: #1a1a1a;
       padding: 20px;
       border-radius: 10px;
-      width: 100%;
-      max-width: 400px;
+      margin-bottom: 20px;
+      animation: fadeIn 0.5s ease-in;
     }
 
-    input, button {
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    input, button, select {
       width: 100%;
       padding: 12px;
       margin: 10px 0;
@@ -82,14 +78,13 @@
       color: #000;
       font-weight: bold;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: transform 0.2s;
     }
 
     button:hover {
-      background: #00b3ff;
+      transform: scale(1.05);
     }
 
-    /* Painel Interno */
     #dashboard {
       display: none;
     }
@@ -101,11 +96,7 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 20px;
-    }
-
-    .navbar button {
-      width: auto;
-      padding: 10px 20px;
+      border-radius: 10px;
     }
 
     .game-grid {
@@ -120,6 +111,7 @@
       overflow: hidden;
       text-align: center;
       cursor: pointer;
+      position: relative;
     }
 
     .game img {
@@ -135,7 +127,43 @@
       font-size: 14px;
     }
 
-    /* Modal para Depósito/Saque */
+    .slot-machine {
+      display: none;
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1001;
+    }
+
+    .slot-reel {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    .reel {
+      width: 60px;
+      height: 80px;
+      background: #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      border-radius: 5px;
+      animation: spin 1s ease-out;
+    }
+
+    @keyframes spin {
+      from { transform: rotateY(0deg); }
+      to { transform: rotateY(360deg); }
+    }
+
     .modal {
       display: none;
       position: fixed;
@@ -157,16 +185,10 @@
       text-align: center;
     }
 
-    .modal-content button {
-      margin-top: 10px;
-    }
-
-    /* Responsividade */
     @media (max-width: 600px) {
       .container {
         padding: 10px;
       }
-
       .game-grid {
         grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
       }
@@ -178,138 +200,136 @@
     <h1>163.BET - Cassino Oficial</h1>
   </header>
 
-  <!-- Tela de Entrada -->
-  <div id="entry-screen" class="container">
-    <div class="form-box">
-      <h2>Cadastro</h2>
-      <input type="text" id="register-username" placeholder="Usuário">
-      <input type="text" id="register-name" placeholder="Nome completo">
-      <input type="tel" id="register-phone" placeholder="Telefone">
-      <input type="password" id="register-password" placeholder="Senha">
-      <button onclick="register()">Registrar</button>
-    </div>
-    <div class="form-box" style="margin-top: 20px;">
-      <h2>Login</h2>
-      <input type="text" id="login-username" placeholder="Usuário">
-      <input type="password" id="login-password" placeholder="Senha">
-      <button onclick="login()">Entrar</button>
-    </div>
-  </div>
-
-  <!-- Painel Interno -->
-  <div id="dashboard" class="container">
-    <div class="navbar">
-      <div>Saldo: R$<span id="balance">18.00</span> (Bônus)</div>
-      <div>
-        <button onclick="openModal('deposit')">Depósito</button>
-        <button onclick="openModal('withdraw')">Saque</button>
+  <div class="container">
+    <!-- Tela de Entrada -->
+    <div id="entry-screen">
+      <div class="form-box">
+        <h2>Cadastro</h2>
+        <input type="text" id="register-username" placeholder="Usuário">
+        <input type="text" id="register-name" placeholder="Nome completo">
+        <input type="tel" id="register-phone" placeholder="Telefone">
+        <input type="password" id="register-password" placeholder="Senha">
+        <button onclick="register()">Registrar</button>
+      </div>
+      <div class="form-box">
+        <h2>Login</h2>
+        <input type="text" id="login-username" placeholder="Usuário">
+        <input type="password" id="login-password" placeholder="Senha">
+        <button onclick="login()">Entrar</button>
       </div>
     </div>
 
-    <section id="jogos">
-      <h2>Provedores Disponíveis</h2>
-      <div class="game-grid">
-        <div class="game" onclick="playGame('PG - Fortune Tiger')">
-          <img src="https://imgur.com/0fZxyDT.jpg" alt="Tiger">
-          <p>PG - Fortune Tiger</p>
-        </div>
-        <div class="game" onclick="playGame('PG - Fortune Ox')">
-          <img src="https://imgur.com/B6ZY68p.jpg" alt="Ox">
-          <p>PG - Fortune Ox</p>
-        </div>
-        <div class="game" onclick="playGame('PG - Fortune Rabbit')">
-          <img src="https://imgur.com/qGvswHP.jpg" alt="Rabbit">
-          <p>PG - Fortune Rabbit</p>
-        </div>
-        <div class="game" onclick="playGame('PG - Fortune Dragon')">
-          <img src="https://imgur.com/kogIGtL.jpg" alt="Dragon">
-          <p>PG - Fortune Dragon</p>
-        </div>
-        <div class="game" onclick="playGame('PG - Fortune Mouse')">
-          <img src="https://imgur.com/fZ6WJrn.jpg" alt="Mouse">
-          <p>PG - Fortune Mouse</p>
-        </div>
-        <div class="game" onclick="playGame('Pragmatic - Gates of Olympus')">
-          <img src="https://imgur.com/A1EzUhl.jpg" alt="Gates of Olympus">
-          <p>Pragmatic - Gates of Olympus</p>
-        </div>
-        <div class="game" onclick="playGame('Pragmatic - Sugar Rush')">
-          <img src="https://imgur.com/N2xpr2z.jpg" alt="Sugar Rush">
-          <p>Pragmatic - Sugar Rush</p>
-        </div>
-        <div class="game" onclick="playGame('Pragmatic - Big Bass Splash')">
-          <img src="https://imgur.com/AKF5WZb.jpg" alt="Big Bass">
-          <p>Pragmatic - Big Bass Splash</p>
+    <!-- Painel Interno -->
+    <div id="dashboard">
+      <div class="navbar">
+        <div>Saldo: R$<span id="balance">18.00</span> (Bônus)</div>
+        <div>
+          <button onclick="openModal('deposit')">Depósito</button>
+          <button onclick="openModal('withdraw')">Saque</button>
         </div>
       </div>
-    </section>
-  </div>
 
-  <!-- Modal de Depósito -->
-  <div id="deposit-modal" class="modal">
-    <div class="modal-content">
-      <h2>Depósito</h2>
-      <select id="deposit-amount">
-        <option>R$10</option>
-        <option>R$20</option>
-        <option>R$50</option>
-        <option>Outro valor</option>
-      </select>
-      <p>Chave Pix: <strong>6da1c7ab-5af7-4dff-ba20-58413fa00181</strong></p>
-      <p>Nome do recebedor: Gateway 163Pag</p>
-      <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=6da1c7ab-5af7-4dff-ba20-58413fa00181" alt="QR Code Pix">
-      <button onclick="closeModal('deposit')">Fechar</button>
+      <section id="jogos">
+        <h2>Provedores Disponíveis</h2>
+        <div class="game-grid">
+          <div class="game" onclick="openSlot('Fortune Tiger')">
+            <img src="https://via.placeholder.com/150x120" alt="Fortune Tiger">
+            <p>PG - Fortune Tiger</p>
+          </div>
+          <div class="game" onclick="openSlot('Fortune Ox')">
+            <img src="https://via.placeholder.com/150x120" alt="Fortune Ox">
+            <p>PG - Fortune Ox</p>
+          </div>
+          <div class="game" onclick="openSlot('Gates of Olympus')">
+            <img src="https://via.placeholder.com/150x120" alt="Gates of Olympus">
+            <p>Pragmatic - Gates of Olympus</p>
+          </div>
+        </div>
+      </section>
     </div>
-  </div>
 
-  <!-- Modal de Saque -->
-  <div id="withdraw-modal" class="modal">
-    <div class="modal-content">
-      <h2>Saque</h2>
-      <p>Volume de aposta necessário: R$400</p>
-      <p>Volume atual: R$<span id="bet-volume">0</span></p>
-      <input type="text" id="withdraw-name" placeholder="Nome completo">
-      <select id="withdraw-method">
-        <option>Chave Pix - CPF</option>
-        <option>Chave Pix - Telefone</option>
+    <!-- Slot Machine Modal -->
+    <div id="slot-machine" class="slot-machine">
+      <h2 id="slot-game-name"></h2>
+      <select id="bet-amount">
+        <option value="1">R$1</option>
+        <option value="5">R$5</option>
+        <option value="10">R$10</option>
       </select>
-      <input type="text" id="withdraw-key" placeholder="Digite a chave">
-      <button onclick="requestWithdraw()">Solicitar Saque</button>
-      <button onclick="closeModal('withdraw')">Fechar</button>
+      <div class="slot-reel" id="reel-container"></div>
+      <button onclick="spinReels()">Girar</button>
+      <button onclick="closeSlot()">Fechar</button>
+    </div>
+
+    <!-- Modal de Depósito -->
+    <div id="deposit-modal" class="modal">
+      <div class="modal-content">
+        <h2>Depósito</h2>
+        <select id="deposit-amount">
+          <option>R$10</option>
+          <option>R$20</option>
+          <option>R$50</option>
+        </select>
+        <p>Chave Pix: 6da1c7ab-5af7-4dff-ba20-58413fa00181</p>
+        <p>Nome do recebedor: Gateway 163Pag</p>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=6da1c7ab-5af7-4dff-ba20-58413fa00181" alt="QR Code Pix">
+        <button onclick="deposit()">Confirmar</button>
+        <button onclick="closeModal('deposit')">Fechar</button>
+      </div>
+    </div>
+
+    <!-- Modal de Saque -->
+    <div id="withdraw-modal" class="modal">
+      <div class="modal-content">
+        <h2>Saque</h2>
+        <p>Volume de aposta necessário: R$400</p>
+        <p>Volume atual: R$<span id="bet-volume">0</span></p>
+        <input type="text" id="withdraw-name" placeholder="Nome completo">
+        <select id="withdraw-method">
+          <option>Chave Pix - CPF</option>
+          <option>Chave Pix - Telefone</option>
+        </select>
+        <input type="text" id="withdraw-key" placeholder="Digite a chave">
+        <button onclick="requestWithdraw()">Solicitar</button>
+        <button onclick="closeModal('withdraw')">Fechar</button>
+      </div>
     </div>
   </div>
 
   <script>
-    let balance = 18; // Bônus inicial de R$18
-    let betVolume = 0; // Volume de apostas inicial
+    let balance = 18;
+    let betVolume = 0;
 
     function register() {
       const username = document.getElementById('register-username').value;
       const name = document.getElementById('register-name').value;
       const phone = document.getElementById('register-phone').value;
       const password = document.getElementById('register-password').value;
-
       if (username && name && phone && password) {
-        alert('Cadastro realizado com sucesso! Bônus de R$18 creditado.');
+        alert('Cadastro bem-sucedido! Bônus de R$18 creditado.');
         document.getElementById('entry-screen').style.display = 'none';
         document.getElementById('dashboard').style.display = 'block';
-        document.getElementById('balance').textContent = balance.toFixed(2);
+        updateBalance();
       } else {
-        alert('Por favor, preencha todos os campos.');
+        alert('Preencha todos os campos.');
       }
     }
 
     function login() {
       const username = document.getElementById('login-username').value;
       const password = document.getElementById('login-password').value;
-
       if (username && password) {
         document.getElementById('entry-screen').style.display = 'none';
         document.getElementById('dashboard').style.display = 'block';
-        document.getElementById('balance').textContent = balance.toFixed(2);
+        updateBalance();
       } else {
-        alert('Por favor, preencha todos os campos.');
+        alert('Preencha todos os campos.');
       }
+    }
+
+    function updateBalance() {
+      document.getElementById('balance').textContent = balance.toFixed(2);
+      document.getElementById('bet-volume').textContent = betVolume.toFixed(2);
     }
 
     function openModal(type) {
@@ -320,25 +340,57 @@
       document.getElementById(`${type}-modal`).style.display = 'none';
     }
 
+    function deposit() {
+      const amount = parseFloat(document.getElementById('deposit-amount').value.replace('R$', ''));
+      balance += amount;
+      alert(`Depósito de R$${amount} confirmado!`);
+      updateBalance();
+      closeModal('deposit');
+    }
+
     function requestWithdraw() {
       if (betVolume < 400) {
-        alert('Você precisa atingir um volume de aposta de R$400 para sacar.');
+        alert('Volume de aposta insuficiente. Faltam R$' + (400 - betVolume).toFixed(2) + '.');
       } else {
         alert('Saque solicitado com sucesso!');
         closeModal('withdraw');
       }
     }
 
-    function playGame(gameName) {
-      // Simulação de aposta (para o protótipo)
-      if (balance >= 1) {
-        balance -= 1;
-        betVolume += 1;
-        document.getElementById('balance').textContent = balance.toFixed(2);
-        document.getElementById('bet-volume').textContent = betVolume.toFixed(2);
-        alert(`Jogando ${gameName} (modo demo)`);
+    function openSlot(gameName) {
+      document.getElementById('slot-machine').style.display = 'block';
+      document.getElementById('slot-game-name').textContent = gameName;
+      document.getElementById('reel-container').innerHTML = `
+        <div class="reel">?</div><div class="reel">?</div><div class="reel">?</div>
+      `;
+    }
+
+    function closeSlot() {
+      document.getElementById('slot-machine').style.display = 'none';
+    }
+
+    function spinReels() {
+      const bet = parseFloat(document.getElementById('bet-amount').value);
+      if (balance >= bet) {
+        balance -= bet;
+        document.getElementById('reel-container').innerHTML = `
+          <div class="reel">🎰</div><div class="reel">🎰</div><div class="reel">🎰</div>
+        `;
+        setTimeout(() => {
+          const result = Math.random() > 0.7 ? '💰 Ganhou!' : 'Tente novamente!';
+          const win = Math.random() > 0.7 ? bet * 2 : 0;
+          balance += win;
+          betVolume += bet;
+          document.getElementById('reel-container').innerHTML = `
+            <div class="reel">${['🍒', '🍋', '🍊'][Math.floor(Math.random() * 3)]}</div>
+            <div class="reel">${['🍒', '🍋', '🍊'][Math.floor(Math.random() * 3)]}</div>
+            <div class="reel">${['🍒', '🍋', '🍊'][Math.floor(Math.random() * 3)]}</div>
+          `;
+          alert(result + (win > 0 ? ` Ganhou R$${win}!` : ''));
+          updateBalance();
+        }, 1000);
       } else {
-        alert('Saldo insuficiente! Faça um depósito.');
+        alert('Saldo insuficiente!');
       }
     }
   </script>
